@@ -4,7 +4,7 @@ create my react with vanilla js
 
 ## References
 
-- [@pomber/didact :: 학습 코드](https://pomb.us/build-your-own-react/)
+- [@pomber/didact :: 학습 자료](https://pomb.us/build-your-own-react/)
 
 - [React.createElement(type, config, children)](https://github.com/facebook/react/blob/f4cc45ce962adc9f307690e1d5cfa28a288418eb/packages/react/src/ReactElement.js#L111)
 

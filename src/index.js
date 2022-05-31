@@ -1,16 +1,55 @@
 // element :: React Element
 // node :: DOM element
 
-// const element = <h1 title="foo">Hello</h1>;
-// JSX -> JS by build tools like Babel
-// const element = React.createElement("h1", { title: "foo" }, "Hello");
-const element = {
-  type: "h1",
-  props: {
-    title: "foo",
-    children: "Hello",
-  },
+// /modules/SnupiReact
+function createTextElement(text) {
+  return {
+    type: "TEXT_ELEMENT",
+    props: {
+      nodeValue: text,
+      children: [],
+    },
+  };
+}
+
+function createElement(type, props, ...children) {
+  return {
+    type,
+    props: {
+      ...props,
+      children: children.map((child) =>
+        typeof child === "object" ? child : createTextElement(child)
+      ),
+    },
+  };
+}
+
+const SnupiReact = {
+  createElement,
 };
+
+// ----------------------------------------------------------------------
+
+// tell Babel,
+// when babel transpiles the JSX, it'll use the function we define
+// /** @jsx SnupiReact.createElement */
+// const element = (
+//   <div id="foo">
+//     <a>bar</a>
+//     <b />
+//   </div>
+// );
+// JSX -> JS by build tools like Babel
+const element = SnupiReact.createElement(
+  "div",
+  { id: "foo" },
+  SnupiReact.createElement("a", null, "bar"),
+  SnupiReact.createElement("b")
+);
+
+console.log(element);
+
+// ----------------------------------------------------------------------
 
 const container = document.getElementById("root");
 

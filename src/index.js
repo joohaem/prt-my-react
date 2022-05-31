@@ -1,32 +1,7 @@
+import SnupiReact from "../modules/SnupiReact.js";
+
 // element :: React Element
 // node :: DOM element
-
-// /modules/SnupiReact
-function createTextElement(text) {
-  return {
-    type: "TEXT_ELEMENT",
-    props: {
-      nodeValue: text,
-      children: [],
-    },
-  };
-}
-
-function createElement(type, props, ...children) {
-  return {
-    type,
-    props: {
-      ...props,
-      children: children.map((child) =>
-        typeof child === "object" ? child : createTextElement(child)
-      ),
-    },
-  };
-}
-
-const SnupiReact = {
-  createElement,
-};
 
 // ----------------------------------------------------------------------
 
@@ -39,6 +14,7 @@ const SnupiReact = {
 //     <b />
 //   </div>
 // );
+
 // JSX -> JS by build tools like Babel
 const element = SnupiReact.createElement(
   "div",

@@ -15,3 +15,5 @@ create my react with vanilla js
 - [MDN :: differences between modules and standard scripts](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Modules#applying_the_module_to_your_html)
 
 - [BABEL :: Customizing the Automatic Runtime Import](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx#custom)
+
+- [React scheduler package](https://github.com/facebook/react/tree/main/packages/scheduler/src)

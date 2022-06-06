@@ -18,4 +18,8 @@ create my react with vanilla js
 
 - [React scheduler package](https://github.com/facebook/react/tree/main/packages/scheduler/src)
 
-- [React Fiber](https://immigration9.github.io/react/2021/05/29/react-fiber-architecture.html)
+- [React Fiber 설명 영상](https://www.youtube.com/watch?v=gsvHmZ3hXjo)
+
+  :: React Fiber는, 작업을 작은 단위로 분할하고, 각 단위를 완료하며 다른 작업을 수행해야 할 경우 (더 중요한 작업을 메인 스레드가 수행하도록) 브라우저가 렌더링을 중단한다
+
+  :: reconciler는 React Fiber의 알고리즘이다

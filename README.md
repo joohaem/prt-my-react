@@ -17,3 +17,5 @@ create my react with vanilla js
 - [BABEL :: Customizing the Automatic Runtime Import](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx#custom)
 
 - [React scheduler package](https://github.com/facebook/react/tree/main/packages/scheduler/src)
+
+- [React Fiber](https://immigration9.github.io/react/2021/05/29/react-fiber-architecture.html)

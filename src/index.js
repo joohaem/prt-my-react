@@ -36,3 +36,14 @@ const text = document.createTextNode("");
 text.nodeValue = element.props.children;
 node.appendChild(text);
 container.appendChild(node);
+
+// SnupiReact.render(
+//   <div>
+//     <h1>
+//       <p />
+//       <a />
+//     </h1>
+//     <h2 />
+//   </div>,
+//   container
+// )

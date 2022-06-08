@@ -2,14 +2,19 @@ import createElement from "./createElement";
 
 function createDom(fiber) {}
 
+function commitRoot() {
+  // TODO :: ad nodes to  dom
+}
+
 function render(element, container) {
   // TODO :: next unit of work
-  nextUnitOfWork = {
+  wipRoot = {
     dom: container,
     props: {
       children: [element],
     },
   };
+  nextUnitOfWork = wipRoot;
 }
 
 // -------------------------------------------------------
@@ -18,6 +23,8 @@ function render(element, container) {
 // 각 단위를 완료하며 다른 작업을 수행해야 할 경우
 // 브라우저가 렌더링을 중단한다
 let nextUnitOfWork = null;
+// the work in progress root
+let wipRoot = null;
 
 // As of November 2019, Concurrent Mode isn’t stable in React yet.
 function workLoop(deadLine) {
@@ -27,6 +34,14 @@ function workLoop(deadLine) {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
     // shouldYield = deadLine.timeRemaining() < 1;
   }
+
+  // 작업이 모두 끝난 후,
+  // 전체 fiber tree를 DOM 에 추가(commit) 한다
+  // (incomplete UI 방지)
+  if (!nextUnitOfWork && wipRoot) {
+    commitRoot();
+  }
+
   requestIdleCallback(workLoop);
 }
 
@@ -42,9 +57,12 @@ function performUnitOfWork(fiber) {
   if (!fiber.dom) {
     fiber.dom = createDom(fiber);
   }
-  if (fiber.parent) {
-    fiber.parent.dom.appendChild(fiber.dom);
-  }
+  // 아래처럼 parent에 넣을 시에,
+  // 브라우저가 트리 렌더링 전에 작업을 중단할 수 있어
+  // incomplete UI가 보여질 위험이 있다
+  // if (fiber.parent) {
+  //   fiber.parent.dom.appendChild(fiber.dom);
+  // }
 
   // TODO :: create new fibers
   const elements = fiber.props.children;

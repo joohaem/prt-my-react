@@ -19,31 +19,36 @@ import SnupiReact from "../modules/SnupiReact.js";
 const element = SnupiReact.createElement(
   "div",
   { id: "foo" },
-  SnupiReact.createElement("a", null, "bar"),
-  SnupiReact.createElement("b")
+  SnupiReact.createElement("input", null, "bar"),
+  SnupiReact.createElement("h2", null, "Hello")
 );
 
-console.log(element);
-
-// ----------------------------------------------------------------------
+{
+  /* <div>
+      <input onInput={updateValue} value={value} />
+      <h2>Hello {value}</h2>
+    </div>, */
+}
 
 const container = document.getElementById("root");
 
 // ReactDOM.render(element, container);
-const node = document.createElement(element.type);
-node.title = element.props.title;
-const text = document.createTextNode("");
-text.nodeValue = element.props.children;
-node.appendChild(text);
-container.appendChild(node);
+// -->
+// const node = document.createElement(element.type);
+// node.title = element.props.title;
+// const text = document.createTextNode("");
+// text.nodeValue = element.props.children;
+// node.appendChild(text);
+// container.appendChild(node);
 
-// SnupiReact.render(
-//   <div>
-//     <h1>
-//       <p />
-//       <a />
-//     </h1>
-//     <h2 />
-//   </div>,
-//   container
-// )
+// ----------------------------------------------------------------------
+
+const updateValue = (e) => {
+  rerender(e.target.value);
+};
+
+const rerender = (value) => {
+  SnupiReact.render(element, container);
+};
+
+rerender("World");

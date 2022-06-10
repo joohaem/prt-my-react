@@ -63,17 +63,33 @@ function commitRoot() {
 function commitWork(fiber) {
   if (!fiber) return;
 
-  const domParent = fiber.parent.dom;
+  // fc를 실행하기 위해 DOM node의 fiber tree 위로 탐색한다
+  let domParentFiber = fiber.parent;
+  while (!domParentFiber.com) {
+    domParentFiber = domParentFiber.parent;
+  }
+  const domParent = domParentFiber.dom;
+
   if (fiber.effectTag === "PACEMENT" && fiber.dom != null) {
     domParent.appendChild(fiber.dom);
   } else if (fiber.effectTag === "DELETION") {
-    domParent.removeChild(fiber.dom);
+    // domParent.removeChild(fiber.dom);
+    // for fc
+    commitDeletion(fiber, domParent);
   } else if (fiber.effectTag === "UPDATE" && fiber.dom != null) {
     updateDom(fiber.dom, fiber.alternate.props, fiber.props);
   }
 
   commitRoot(fiber.child);
   commitRoot(fiber.sibling);
+}
+
+function commitDeletion(fiber, domParent) {
+  if (fiber.dom) {
+    domParent.removeChild(fiber.dom);
+  } else {
+    commitDeletion(fiber.child, domParent);
+  }
 }
 
 function render(element, container) {
@@ -130,9 +146,9 @@ requestIdleCallback(workLoop);
 function performUnitOfWork(fiber) {
   // TODO :: add dom node
   // first fiber.dom <- container
-  if (!fiber.dom) {
-    fiber.dom = createDom(fiber);
-  }
+  // if (!fiber.dom) {
+  //   fiber.dom = createDom(fiber);
+  // }
 
   // 아래처럼 parent에 넣을 시에,
   // 브라우저가 트리 렌더링 전에 작업을 중단할 수 있어
@@ -142,8 +158,18 @@ function performUnitOfWork(fiber) {
   // }
 
   // TODO :: create new fibers
-  const elements = fiber.props.children;
-  reconcileChildren(fiber, elements);
+  // const elements = fiber.props.children;
+  // reconcileChildren(fiber, elements);
+
+  // fiber 타입이 functional component이면,
+  // 다른 업데이트 방식을 취한다 (updateFunctionComponent)
+  // (fc :: DOM node X, props 직접 접근 대신 함수 실행)
+  const isFunctionComponent = fiber.type instanceof Function;
+  if (isFunctionComponent) {
+    updateFunctionComponent(fiber);
+  } else {
+    updateHostComponent(fiber);
+  }
 
   // TODO :: return next unit of work
   // 자식 -> 자식의 형제 -> 부모의 형제 순
@@ -157,6 +183,18 @@ function performUnitOfWork(fiber) {
     }
     nextFiber = nextFiber.parent;
   }
+}
+
+function updateFunctionComponent(fiber) {
+  const children = [fiber.type(fiber.props)];
+  reconcileChildren(fiber, children);
+}
+
+function updateHostComponent(fiber) {
+  if (!fiber.dom) {
+    fiber.dom = createDom(fiber);
+  }
+  reconcileChildren(fiber, fiber.props.children);
 }
 
 // reconcile the old fibers with the new elements.

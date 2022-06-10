@@ -6,6 +6,8 @@ create my react with vanilla js
 
 - [~ Step 6 CodeSandbox](https://codesandbox.io/s/didact-6-96533?file=/src/index.js)
 
+- [~ Step 8 CodeSandbox](https://codesandbox.io/s/didact-8-21ost)
+
 ## References
 
 - [Github :: React.createElement(type, config, children)](https://github.com/facebook/react/blob/f4cc45ce962adc9f307690e1d5cfa28a288418eb/packages/react/src/ReactElement.js#L111)

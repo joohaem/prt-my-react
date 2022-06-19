@@ -4,6 +4,8 @@ create my react with vanilla js
 
 - [@pomber/didact :: 학습 자료](https://pomb.us/build-your-own-react/)
 
+- [@pomber/didact :: 학습 자료(ko)](https://bluewings.github.io/build-your-own-react/)
+
 - [~ Step 6 CodeSandbox](https://codesandbox.io/s/didact-6-96533?file=/src/index.js)
 
 - [~ Step 8 CodeSandbox](https://codesandbox.io/s/didact-8-21ost)
